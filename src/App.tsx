@@ -1,4 +1,5 @@
 import "./App.css";
+import { Button } from "./components/Button";
 
 function App() {
   //const [count, setCount] = useState(0);
@@ -9,6 +10,7 @@ function App() {
         <h1 className="text-3xl font-bold text-blue-600">
           Hello knowledgeNote ✨
         </h1>
+        <Button variant="primary">Primary</Button>
       </div>
     </>
   );
