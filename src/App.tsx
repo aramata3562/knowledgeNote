@@ -1,18 +1,20 @@
-import "./App.css";
-import { Button } from "./components/Button";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { MenuPage } from "./pages/MenuPage";
+import { ListPage } from "./pages/ListPage";
+import { AddPage } from "./pages/AddPage";
 
 function App() {
-  //const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <h1 className="text-3xl font-bold text-blue-600">
-          Hello knowledgeNote ✨
-        </h1>
-        <Button variant="primary">Primary</Button>
+    <Router>
+      <div className="min-h-screen bg-grayScale-2 dark:bg-grayScale-1 text-grayScale-12 dark:text-grayScale-12 p-4">
+        <Routes>
+          <Route path="/" element={<MenuPage />} />
+          <Route path="/list/:category" element={<ListPage />} />
+          <Route path="/add/:category" element={<AddPage />} />
+        </Routes>
       </div>
-    </>
+    </Router>
   );
 }
 
