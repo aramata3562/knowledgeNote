@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { MenuPage } from "./pages/MenuPage";
 import { ListPage } from "./pages/ListPage";
-import { AddPage } from "./pages/AddPage";
+import AddRouter from "./pages/add";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MenuPage />} />
           <Route path="/list/:category" element={<ListPage />} />
-          <Route path="/add/:category" element={<AddPage />} />
+          <Route path="/add/:category" element={<AddRouter />} />
         </Routes>
       </div>
     </Router>
