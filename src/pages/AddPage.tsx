@@ -17,8 +17,25 @@ export function AddPage() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log("登録データ:", data);
+  const GAS_URL =
+    "https://script.google.com/macros/s/AKfycbzBhS_LtaHpsnzvf2KvNSpXqJvjzdtIkmpJZ_90WlUWizQy8by8j80Q-09cqTxgPZ2e/exec";
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("category", category || "");
+      formData.append("text", data.text);
+      formData.append("status", data.status);
+      const response = await fetch(GAS_URL, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await response.json();
+      console.log("送信成功:", result);
+      // TODO: 必要なら登録完了後の処理をここに書く（リダイレクトとか）
+    } catch (error) {
+      console.error("送信エラー:", error);
+    }
   };
 
   return (
