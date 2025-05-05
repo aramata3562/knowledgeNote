@@ -39,6 +39,7 @@ export function AddMathPage() {
           value={watch("note")}
           onChange={(val) => setValue("note", val)}
           format={mathTemplate}
+          rows={20}
         />
 
         <SelectField

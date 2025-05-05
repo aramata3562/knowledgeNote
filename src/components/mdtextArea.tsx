@@ -6,6 +6,7 @@ type MdTextAreaProps = {
   onChange: (value: string) => void;
   placeholder?: string;
   format?: string; // markdownテンプレート（初期値として利用）
+  rows?: number; // テキストエリアの行数（高さ）を制御可能
 };
 
 export function MdTextArea({
@@ -14,6 +15,7 @@ export function MdTextArea({
   onChange,
   placeholder = "",
   format,
+  rows = 8, // ✅ デフォルトは8行
 }: MdTextAreaProps) {
   const [internalValue, setInternalValue] = useState(value ?? format ?? "");
 
@@ -35,7 +37,7 @@ export function MdTextArea({
       <label className="font-semibold">{label}</label>
       <textarea
         className="w-full p-2 border rounded bg-grayScale-0 dark:bg-grayScale-2 text-grayScale-12"
-        rows={8}
+        rows={rows}
         placeholder={placeholder}
         value={internalValue}
         onChange={handleChange}
