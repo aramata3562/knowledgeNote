@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
 import { TextInput } from "../../components/TextInput";
-import { SelectField } from "../../components/SelectField";
 import { MdTextArea } from "../../components/mdtextArea";
 import { FormSection } from "../../components/FormSection";
 import { Button } from "../../components/Button";
+import { submitToGAS } from "../../utils/submitToGAS";
+import mathTemplate from "./md/math.md?raw";
+import { SelectField } from "../../components/SelectField";
 
 type FormValues = {
   title: string;
-  url: string;
-  topic: string;
   note: string;
   status: string;
 };
@@ -16,51 +16,39 @@ type FormValues = {
 export function AddMathPage() {
   const { register, handleSubmit, setValue, watch } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log("数学ノート登録:", data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await submitToGAS(data, "math");
+      console.log("送信成功");
+    } catch (error) {
+      console.error("送信エラー:", error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 p-4">
-      <FormSection title="記事情報の入力">
+      <FormSection title="数学ノートの入力">
         <TextInput
-          label="タイトル"
-          placeholder="例）ChatGPTによる思考プロセスの自動化"
+          label="用語"
+          placeholder="ラグランジュの未定乗数法"
           {...register("title", { required: true })}
         />
-        <TextInput
-          label="URL"
-          placeholder="https://example.com"
-          {...register("url", { required: true })}
-        />
-        <SelectField
-          label="トピック"
-          options={[
-            { label: "AI", value: "AI" },
-            { label: "経済", value: "経済" },
-            { label: "教育", value: "教育" },
-          ]}
-          {...register("topic")}
-        />
-      </FormSection>
 
-      <FormSection title="要点メモ">
         <MdTextArea
           label="要点"
           value={watch("note")}
           onChange={(val) => setValue("note", val)}
-          placeholder="重要なポイント、引用などを記入"
-          format="## 要点\n- "
+          format={mathTemplate}
         />
-      </FormSection>
 
-      <FormSection title="状態">
         <SelectField
-          label="ステータス"
+          label="理解度"
           options={[
-            { label: "未読", value: "unread" },
-            { label: "読了", value: "read" },
-            { label: "再読希望", value: "reread" },
+            { label: "全くわからない", value: "0" },
+            { label: "ほとんど理解できない", value: "1" },
+            { label: "何となくわかる", value: "2" },
+            { label: "大体わかる", value: "3" },
+            { label: "完全にわかる", value: "4" },
           ]}
           {...register("status")}
         />

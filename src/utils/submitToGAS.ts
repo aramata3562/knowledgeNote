@@ -1,3 +1,8 @@
+/**
+ * GASにデータを送信する
+ * @param data 送信するデータ。react-hook-formのFormValues
+ * @param type カテゴリ(例:article,math,word)
+ */
 export const submitToGAS = async (
   data: Record<string, string>,
   type: string
